@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 import hashMap from '../../lib/docs/hash-map.json';
 import { getSlug, removeFromLast } from '../../lib/docs/utils';
 import { getPaths, findRouteByPath, fetchDocsManifest } from '../../lib/docs/page';
-import { getRawFileFromRepo } from '../../lib/github';
+import { getLatestTag, getRawFileFromRepo } from '../../lib/github';
 import markdownToHtml from '../../lib/docs/markdown-to-html';
 import PageContent from '../../components/page-content';
 import Container from '../../components/container';
@@ -122,18 +122,20 @@ const Docs = ({ routes, route, data, html }) => {
 };
 
 export async function unstable_getStaticPaths() {
-  const manifest = await fetchDocsManifest();
+  const tag = await getLatestTag();
+  const manifest = await fetchDocsManifest(tag);
   return getPaths(manifest.routes);
 }
 
 export async function unstable_getStaticProps({ params }) {
   const slug = getSlug(params);
-  const manifest = await fetchDocsManifest();
+  const tag = await getLatestTag();
+  const manifest = await fetchDocsManifest(tag);
   const route = findRouteByPath(slug, manifest.routes);
 
   if (!route) return {};
 
-  const md = await getRawFileFromRepo(route.path);
+  const md = await getRawFileFromRepo(route.path, tag);
   const { content, data } = matter(md);
   const html = await markdownToHtml(route.path, content);
 
