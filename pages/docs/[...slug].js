@@ -5,7 +5,8 @@ import matter from 'gray-matter';
 import hashMap from '../../lib/docs/hash-map.json';
 import { getSlug, removeFromLast } from '../../lib/docs/utils';
 import { getPaths, findRouteByPath, fetchDocsManifest } from '../../lib/docs/page';
-import { getLatestTag, getRawFileFromRepo } from '../../lib/github';
+import { getStableTag } from '../../lib/github/api';
+import { getRawFileFromRepo } from '../../lib/github/raw';
 import markdownToHtml from '../../lib/docs/markdown-to-html';
 import PageContent from '../../components/page-content';
 import Container from '../../components/container';
@@ -129,7 +130,7 @@ export async function unstable_getStaticPaths() {
 
 export async function unstable_getStaticProps({ params }) {
   const slug = getSlug(params);
-  const tag = await getLatestTag();
+  const tag = await getStableTag();
   const manifest = await fetchDocsManifest(tag);
   const route = findRouteByPath(slug, manifest.routes);
 

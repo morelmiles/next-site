@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { GITHUB_URL, REPO_NAME, REPO_BRANCH } from '../../lib/github-constants';
+import { GITHUB_URL, REPO_NAME, REPO_BRANCH } from '../../lib/github/constants';
 import Notification from './notification';
 import FooterFeedback from '../footer-feedback';
 
