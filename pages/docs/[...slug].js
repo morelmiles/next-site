@@ -25,7 +25,7 @@ function getCategoryPath(routes) {
 
 function SidebarRoutes({ isMobile, routes: currentRoutes, level = 1 }) {
   const { query } = useRouter();
-  const { slug } = getSlug(query);
+  const { tag, slug } = getSlug(query);
 
   return currentRoutes.map(({ path, title, routes, heading, open }) => {
     if (routes) {
@@ -49,8 +49,9 @@ function SidebarRoutes({ isMobile, routes: currentRoutes, level = 1 }) {
     }
 
     const href = '/docs/[...slug]';
-    const pathname = removeFromLast(path, '.');
-    const selected = slug.startsWith(pathname);
+    const pagePath = removeFromLast(path, '.');
+    const pathname = tag ? pagePath.replace('/docs', `/docs/tag/${tag}`) : pagePath;
+    const selected = slug.startsWith(pagePath);
     const route = { href, path, title, pathname, selected };
 
     return <Post key={title} isMobile={isMobile} level={level} route={route} />;
