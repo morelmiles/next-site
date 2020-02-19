@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { getSlug } from '../../lib/docs/utils';
-import { GITHUB_URL, REPO_NAME, REPO_BRANCH } from '../../lib/github/constants';
+import { GITHUB_URL, REPO_NAME } from '../../lib/github/constants';
 import Notification from './notification';
 import FooterFeedback from '../footer-feedback';
 
@@ -13,7 +13,7 @@ function areEqual(prevProps, props) {
 function DocsPage({ path, html }) {
   const { query } = useRouter();
   const { tag, slug } = getSlug(query);
-  const editUrl = `${GITHUB_URL}/${REPO_NAME}/edit/${REPO_BRANCH}${path}`;
+  const editUrl = `${GITHUB_URL}/${REPO_NAME}/edit/canary${path}`;
 
   return (
     <div className="docs">
