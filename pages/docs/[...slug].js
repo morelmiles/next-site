@@ -137,7 +137,7 @@ export async function unstable_getStaticProps({ params }) {
 
   const md = await getRawFileFromRepo(route.path, tag);
   const { content, data } = matter(md);
-  const html = await markdownToHtml(route.path, content);
+  const html = await markdownToHtml(route.path, tag, content);
 
   return { props: { routes: manifest.routes, data, route, html } };
 }
