@@ -131,7 +131,7 @@ export async function unstable_getStaticPaths() {
 
 export async function unstable_getStaticProps({ params }) {
   const { tag, slug } = getSlug(params);
-  const latestTag = await getLatestTag();
+  const latestTag = !tag && (await getLatestTag());
   const manifest = await fetchDocsManifest(tag || latestTag);
   const route = findRouteByPath(slug, manifest.routes);
 
