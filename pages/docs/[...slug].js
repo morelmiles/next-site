@@ -131,13 +131,17 @@ export async function unstable_getStaticPaths() {
 
 export async function unstable_getStaticProps({ params }) {
   const { tag, slug } = getSlug(params);
-  const latestTag = !tag && (await getLatestTag());
-  const manifest = await fetchDocsManifest(tag || latestTag);
-  const route = findRouteByPath(slug, manifest.routes);
+  const currentTag = tag || (await getLatestTag());
+  const manifest = await fetchDocsManifest(currentTag).catch(error => {
+    // If a manifest wasn't found for a custom tag, show a 404 instead
+    if (error.status === 404) return;
+    throw error;
+  });
+  const route = manifest && findRouteByPath(slug, manifest.routes);
 
   if (!route) return {};
 
-  const md = await getRawFileFromRepo(route.path, tag || latestTag);
+  const md = await getRawFileFromRepo(route.path, currentTag);
   const { content, data } = matter(md);
   const html = await markdownToHtml(route.path, tag, content);
 
