@@ -108,7 +108,10 @@ const nextConfig = {
     }
   },
   webpack: (config, { dev, isServer }) => {
-    if (isServer && !dev) {
+    if (!dev && isServer) {
+      // we're in build mode so enable shared caching for the GitHub API
+      process.env.USE_CACHE = 'true';
+
       const originalEntry = config.entry;
 
       config.entry = async () => {
