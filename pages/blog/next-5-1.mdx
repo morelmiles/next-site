@@ -199,8 +199,15 @@ module.exports = withSourceMaps()
 
 This enabled outputting of source maps for all but one file, `app.js`, the reason for this was that `app.js` consisted of multiple files (`manifest.js` and `commons.js`) combined with a webpack plugin. A side effect of this was that webpack couldn't generate source maps for the combined file.
 
-Thanks to a [pull request](https://github.com/zeit/next.js/pull/3793) from [@ptomasroos](https://github.com/ptomasroos) the `app.js` file was replaced by `main.js`. This file will hold the code that was previously compiled to `manifest.js` and `commons.js` and webpack will generate a source map for `main.js`. Source maps will be automatically served, allowing external error tracking tools to show the actual file an line number when errors are detected.<Image src={'https://assets.zeit.co/image/upload/front' + '/blog/next5-1/sourcemap.png'} width={1874/3} height={1050/3} />
+Thanks to a [pull request](https://github.com/zeit/next.js/pull/3793) from [@ptomasroos](https://github.com/ptomasroos) the `app.js` file was replaced by `main.js`. This file will hold the code that was previously compiled to `manifest.js` and `commons.js` and webpack will generate a source map for `main.js`. Source maps will be automatically served, allowing external error tracking tools to show the actual file an line number when errors are detected.
 
+<Image
+  src={
+    'https://assets.zeit.co/image/upload/front' + '/blog/next5-1/sourcemap.png'
+  }
+  width={1874 / 3}
+  height={1050 / 3}
+/>
 <Caption>The source code is shown in the sources panel</Caption>
 
 ## New plugins / improvements to existing ones
